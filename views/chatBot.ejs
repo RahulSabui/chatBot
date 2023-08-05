@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat System</title>
+    <title>AI Chat System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
         }
 
         #chat-container {
@@ -70,7 +73,9 @@
 </head>
 
 <body>
+
     <div id="chat-container">
+        <h1>AI Chat System</h1>
         <div id="chat-container1">
 
         </div>
@@ -89,13 +94,15 @@
     $(document).ready(function () {
         $("#send").on('click', function (e) {
             const getValue = $('input').val();
+
+            if (getValue) {
                 $('#chat-container1').append(
-                    `   <div class="message sender" id="sender">
+                `   <div class="message sender" id="sender">
                             <div class="time">${getValue}</div>
                             <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', hour12: true })}</div>
                         </div>
                     `
-                );
+            );
             $('input').val('');
             $.ajax({
                 type: "post",
@@ -104,18 +111,20 @@
                 success: function (response) {
                     console.log(response);
                     // dataArray.push(response)
-                    
-                        $('#chat-container1').append(
-                            `   <div class=message receiver">
+
+                    $('#chat-container1').append(
+                        `   <div class=message receiver">
                                     <div class="time">${response}</div>
                                     <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', hour12: true })}</div>
                                 </div>
                             `
-                        );
+                    );
 
                 }
 
             });
+            }
+          
         });
     });
 </script>
