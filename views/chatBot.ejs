@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        #chat-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .message.sender {
+            background-color: #DCF8C6;
+            align-self: flex-start;
+        }
+
+        .message.receiver {
+            background-color: #E8E8E8;
+            align-self: flex-end;
+        }
+
+        .message.sender .time {
+            text-align: right;
+        }
+
+        .message.receiver .time {
+            text-align: left;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .input-container button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-container">
+        <div class="message sender" id="sender">
+            <p>I have a question about your products.</p>
+        </div>
+        <div class="message receiver">
+            <p>Hello! How can I help you?</p>
+        </div>
+
+        <!-- Add more messages here -->
+
+
+    </div>
+    <div class="input-container">
+        <input type="text" placeholder="Type your message...">
+        <button id="send">Send</button>
+    </div>
+</body>
+
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#send").on('click', function (e) {
+            let getArr = []
+            const getValue = $('input').val();
+            localStorage.setItem('senderValues', getValue );
+            let data= localStorage.getItem('senderValues');
+            // dataArray.push(getValue)
+           
+                $('#chat-container').append(
+                    `   <div class="message sender" id="sender">
+                            <p>${data}</p>
+                        </div>
+                    `
+                );
+
+
+
+
+
+
+            $('input').val('');
+            $.ajax({
+                type: "post",
+                url: "/ask",
+                data: { msg: getValue },
+                success: function (response) {
+                    console.log(response);
+                    localStorage.setItem('receiverValues', response);
+                    let data = localStorage.getItem('receiverValues');
+                    // dataArray.push(response)
+                    
+                        $('#chat-container').append(
+                            `   <div class=message receiver">
+                                    <p>${data}</p>
+                                </div>
+                            `
+                        );
+
+                }
+
+            });
+        });
+    });
+</script>
