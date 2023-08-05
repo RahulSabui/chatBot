@@ -71,20 +71,14 @@
 
 <body>
     <div id="chat-container">
-        <div class="message sender" id="sender">
-            <p>I have a question about your products.</p>
-        </div>
-        <div class="message receiver">
-            <p>Hello! How can I help you?</p>
+        <div id="chat-container1">
+
         </div>
 
-        <!-- Add more messages here -->
-
-
-    </div>
-    <div class="input-container">
-        <input type="text" placeholder="Type your message...">
-        <button id="send">Send</button>
+        <div class="input-container">
+            <input type="text" placeholder="Type your message...">
+            <button id="send">Send</button>
+        </div>
     </div>
 </body>
 
@@ -93,26 +87,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-
         $("#send").on('click', function (e) {
-            let getArr = []
             const getValue = $('input').val();
-            localStorage.setItem('senderValues', getValue );
-            let data= localStorage.getItem('senderValues');
-            // dataArray.push(getValue)
-           
-                $('#chat-container').append(
+                $('#chat-container1').append(
                     `   <div class="message sender" id="sender">
-                            <p>${data}</p>
+                            <div class="time">${getValue}</div>
+                            <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', hour12: true })}</div>
                         </div>
                     `
                 );
-
-
-
-
-
-
             $('input').val('');
             $.ajax({
                 type: "post",
@@ -120,13 +103,12 @@
                 data: { msg: getValue },
                 success: function (response) {
                     console.log(response);
-                    localStorage.setItem('receiverValues', response);
-                    let data = localStorage.getItem('receiverValues');
                     // dataArray.push(response)
                     
-                        $('#chat-container').append(
+                        $('#chat-container1').append(
                             `   <div class=message receiver">
-                                    <p>${data}</p>
+                                    <div class="time">${response}</div>
+                                    <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', hour12: true })}</div>
                                 </div>
                             `
                         );
