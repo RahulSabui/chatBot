@@ -119,7 +119,7 @@
                 $('#chat-container1').append(
                 `   <div class="message sender" id="sender">
                             <div class="time">${getValue}</div>
-                            <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', hour12: true })}</div>
+                            <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) }</div>
                         </div>
                     `
             );
@@ -135,7 +135,7 @@
                     $('#chat-container1').append(
                         `   <div class=message receiver">
                                     <div class="time">${response}</div>
-                                    <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', hour12: true })}</div>
+                                    <div class="time">${(new Date()).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) }</div>
                                 </div>
                             `
                     );
